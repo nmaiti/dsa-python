@@ -1,65 +1,76 @@
 import os
 
+
 class Node:
     def __init__(self, data):
-        self.data=data
-        self.next=None
+        self.data = data
+        self.next = None
+
 
 class LinkedList:
     def __init__(self):
-        self.head=None
+        self.head = None
         self.elements = 0
-
 
     def printlist(self):
         print(f'\033[92mList content \033[0m')
         cur_node = self.head
-        index=0
-        while cur_node != None :
-            print (f'[{index}]{cur_node.data}', end=' -> ')
+        index = 0
+        while cur_node != None:
+            print(f'[{index}]{cur_node.data}', end=' -> ')
             cur_node = cur_node.next
             index += 1
-        print (f'None')
+        print(f'None')
         return
+    def clear(self):
+        print(f'\033[92mClearing list\033[0m')
+        cur_node = self.head
+        while cur_node != None:
+            next_node = cur_node.next
+            cur_node = None
+            cur_node = next_node
+        self.head = None
+        return
+    
 
     def insert(self, data):
         print(f'\033[92mInserting [{data}]\033[0m')
-        new_node=Node(data)
+        new_node = Node(data)
         if self.head == None:
             self.head = new_node
             return
-        else :
+        else:
             last_node = self.head
-            while last_node.next != None :
+            while last_node.next != None:
                 last_node = last_node.next
 
             last_node.next = new_node
             return
 
     def insertAtBegin(self, data):
-        new_node=Node(data)
+        new_node = Node(data)
         new_node.next = self.head
         self.head = new_node
         return
 
     def insertAtIndex(self, data, index):
         print(f'\033[92mInserting [{data}] at index [{index}]\033[0m')
-        if index == 0 :
+        if index == 0:
             self.insertAtBegin(data)
             return
 
         cur_node = self.head
-        position = 0 # index
+        position = 0  # index
 
         while cur_node != None and position+1 != index:
             position += 1
             cur_node = cur_node.next
 
-        if cur_node != None :
-            new_node=Node(data)
-            new_node.next=cur_node.next
-            cur_node.next=new_node
-        else :
+        if cur_node != None:
+            new_node = Node(data)
+            new_node.next = cur_node.next
+            cur_node.next = new_node
+        else:
             print(f'Index_not_present')
             return
 
@@ -68,27 +79,26 @@ class LinkedList:
         if self.head == None:
             print(f'List is empty')
             return
-        else :
+        else:
             self.head = self.head.next
             return
 
-
     def deleteAtIndex(self, index):
         print(f'\033[92mDeleting index [{index}]\033[0m')
-        if index == 0 :
+        if index == 0:
             self.deleteAtBegin()
             return
 
-        else :
+        else:
             position = 0
             cur_node = self.head
-            while cur_node != None and  position +1 != index :
+            while cur_node != None and position + 1 != index:
                 position += 1
                 cur_node = cur_node.next
 
-        if position + 1 == index and cur_node != None and cur_node.next != None :
+        if position + 1 == index and cur_node != None and cur_node.next != None:
             cur_node.next = cur_node.next.next
-        else :
+        else:
             print(f'Index [{index}]_not_present')
 
         return
@@ -118,24 +128,24 @@ class LinkedList:
         print(f'\033[92mReversing the list\033[0m')
         prev_node = None
         cur_node = self.head
-        next_node= None
+        next_node = None
 
         if cur_node is None:
             print('List is empty')
             return
-        
-        while cur_node is not None :
+
+        while cur_node is not None:
             next_node = cur_node.next
             cur_node.next = prev_node
             prev_node = cur_node
             cur_node = next_node
 
-        self.head= prev_node
+        self.head = prev_node
         return
 
 
-
 # def mergeList(self, llist):
+
 
     def removeDuplicates(self):
         print(f'\033[92mRemoving duplicates\033[0m')
@@ -144,15 +154,14 @@ class LinkedList:
         data_dict = {}
 
         while cur_node is not None:
-            if cur_node.data in data_dict :
-                  prev_node.next = cur_node.next
-            else :
+            if cur_node.data in data_dict:
+                prev_node.next = cur_node.next
+            else:
                 data_dict[cur_node.data] = 1
                 prev_node = cur_node
 
             cur_node = cur_node.next
         return
-
 
     def findMiddle(self):
         print(f'\033[92mFinding middle element\033[0m')
@@ -167,18 +176,17 @@ class LinkedList:
         print(f'Middle element is [{slow_ptr.data}]')
         return
 
-
     def findNthFromEnd(self, n):
         print(f'\033[92mFinding nth element from end\033[0m')
         slow_ptr = self.head
         fast_ptr = self.head
-        
+
         for _ in range(n):
             if fast_ptr is None:
                 print(f'List is shorter than [{n}]')
                 return
             fast_ptr = fast_ptr.next
-        
+
         while fast_ptr is not None:
             slow_ptr = slow_ptr.next
             fast_ptr = fast_ptr.next
@@ -189,7 +197,6 @@ class LinkedList:
             print(f'Nth element from end is not found')
         return
 
-
     def countOccurences(self, data):
         print(f'\033[92mCount Of occurences [{data}]\033[0m')
         cur_node = self.head
@@ -197,17 +204,18 @@ class LinkedList:
         count = 0
 
         while cur_node is not None:
-            if cur_node.data == data :
+            if cur_node.data == data:
                 count += 1
             cur_node = cur_node.next
-         
+
         print(f'Occurences of [{data}] is [{count}]')
         return count
 
 
 # def rotateList(self, k):
 
-    def isPalindrome(self):
+
+    def isPalindromeSimple(self):
         print(f'\033[92mChecking for palindrome\033[0m')
         cur_node = self.head
         data_list = []
@@ -229,8 +237,62 @@ class LinkedList:
         print(f'List is palindrome')
         return
 
-# def isCircular(self):
+    def isPalindromeOn(self):
+        print(f'\033[92mChecking for palindrome\033[0m')
+        fast_ptr = self.head
+        prev_ptr = None
+        slow_ptr = self.head
+        nxt_ptr = None
 
+        if self.head is None:
+            print('List is empty')
+            return
+
+        # Step 1: Find the middle of the list and reverse the first half
+        while fast_ptr is not None and fast_ptr.next is not None:
+            fast_ptr = fast_ptr.next.next
+
+            # Reverse the first half of the list
+            nxt_ptr = slow_ptr.next
+            slow_ptr.next = prev_ptr
+            prev_ptr = slow_ptr
+            slow_ptr = nxt_ptr
+
+        # Step 2: Handle odd-length lists
+        second_half = slow_ptr if fast_ptr is None else slow_ptr.next
+
+        # Step 3: Compare the two halves
+        first_half = prev_ptr
+        is_palindrome = True
+
+        while second_half is not None:
+            if first_half.data != second_half.data:
+                is_palindrome = False
+                break
+            first_half = first_half.next
+            second_half = second_half.next
+
+        # Step 4: Restore the original list structure
+        prev = None
+        first_half= prev_ptr
+        while first_half is not None:
+            next_node = first_half.next
+            first_half.next = prev
+            prev = first_half
+            first_half = next_node
+
+        #if prev_ptr is not None:
+        prev_ptr.next = slow_ptr
+
+
+        if is_palindrome:
+            print(f'List is palindrome')
+        else:
+            print(f'List is not palindrome')
+        return
+
+
+# def isCircular(self):
 
 
 def main():
@@ -246,11 +308,11 @@ def main():
     llist.printlist()
     llist.insertAtBegin(24)
     llist.printlist()
-    llist.insertAtIndex(55,0)
+    llist.insertAtIndex(55, 0)
     llist.printlist()
-    llist.insertAtIndex(44,2)
+    llist.insertAtIndex(44, 2)
     llist.printlist()
-    llist.insertAtIndex(33,6)
+    llist.insertAtIndex(33, 6)
     llist.printlist()
     print(f'remove at index 0')
     llist.deleteAtIndex(0)
@@ -268,14 +330,24 @@ def main():
     llist.findMiddle()
     llist.findNthFromEnd(2)
 
+    llist.clear()
+    llist.printlist()
+
+
+
+    llist.insert(1)
+    llist.insert(44)
+#    llist.insert(23)
+    llist.insert(44)
+    llist.insert(2)
+    llist.isPalindromeOn()
+    llist.printlist()
 
     return
+
 
 if __name__ == '__main__':
     main()
     print(f"{os.path.basename(__file__)} is called directly")
 else:
     print(f"{__file__} is being imported")
-
-
-
